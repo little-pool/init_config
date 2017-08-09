@@ -1,8 +1,8 @@
 <config-template xmlns="http://tail-f.com/ns/config/1.0">
   <devices xmlns="http://tail-f.com/ns/ncs">
-    <device>
+    <device tags = 'nocreate'>
       <name>($DEVICE)</name>
-      <config>
+      <config tags = 'merge'>
         <interface xmlns="urn:ios">
 
             <GigabitEthernet when="{$INT_TYPE='GigabitEthernet'}">

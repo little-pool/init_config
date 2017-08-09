@@ -3,8 +3,7 @@ import ncs
 from tools.get_linkaddress import get_linkaddress
 from ncs.application import Service
 from IPy import IP
-
-
+from init_config.mapping import *
 # ------------------------
 # SERVICE CALLBACK EXAMPLE
 # ------------------------
@@ -15,15 +14,19 @@ class link_service_ServiceCallbacks(Service):
         self.log.info('Service create(service=', service._path, ')')
         print('link_service is running')
         part_name = service.part_name
+
+        #get netblock
         netblock = service.netblock
         netaddress = IP(netblock.netaddress+'/'+netblock.netmask)
+        linkipgenerator = get_linkaddress(netaddress)
+
+        #get links and do the mapping tast
         links = service.link
-        print(type(links))
-        print(len(links))
-        linkipgen = get_linkaddress(netaddress)
-        print(linkipgen.__next__())
-        print(linkipgen.__next__())
-        print(linkipgen.__next__())
+        for i in links:
+            ip_peer = linkipgenerator.__next__()
+            interface_mapping(service, i, ip_peer)
+
+
             
         
         
