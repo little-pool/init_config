@@ -1,0 +1,48 @@
+<config-template xmlns="http://tail-f.com/ns/config/1.0">
+  <devices xmlns="http://tail-f.com/ns/ncs">
+    <device>
+      <name>($DEVICE)</name>
+      <config>
+        <interface xmlns="urn:ios">
+
+            <GigabitEthernet when="{$INT_TYPE='GigabitEthernet'}">
+                <name>($INT_ID)</name>
+                <ip>
+                    <address>
+                    <primary>
+                        <address>($IPADDRESS)</address>
+                        <mask>($NETMASK)</mask>
+                    </primary>
+                    </address>
+                </ip>
+            </GigabitEthernet>
+
+            <Ethernet when="{$INT_TYPE='Ethernet'}">
+                <name>($INT_ID)</name>
+                <ip>
+                    <address>
+                    <primary>
+                        <address>($IPADDRESS)</address>
+                        <mask>($NETMASK)</mask>
+                    </primary>
+                    </address>
+                </ip>
+            </Ethernet>
+
+            <FastEthernet when="{$INT_TYPE='FastEthernet'}">
+                <name>($INT_ID)</name>
+                <ip>
+                    <address>
+                    <primary>
+                        <address>($IPADDRESS)</address>
+                        <mask>($NETMASK)</mask>
+                    </primary>
+                    </address>
+                </ip>
+            </FastEthernet>
+
+        </interface>
+        </config>
+    </device>
+  </devices>
+</config-template>

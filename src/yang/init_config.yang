@@ -1,0 +1,165 @@
+module init_config {
+
+  namespace "http://example.com/init_config";
+  prefix init_config;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import tailf-common {
+    prefix tailf;
+  }
+  import tailf-ncs {
+    prefix ncs;
+  }
+
+  description
+    "Bla bla...";
+
+  revision 2016-01-01 {
+    description
+      "Initial revision.";
+  }
+
+  grouping node{
+    leaf device{
+      type leafref{
+        path "/ncs:devices/ncs:device/ncs:name";
+      }
+    }
+    container interface{
+      leaf int_type{
+        type enumeration{
+          enum FastEthernet;
+          enum GigabitEthernet;
+          enum TenGigE;
+          enum Ethernet;
+        }
+      }
+      leaf int_id{
+        type string;
+      }
+    }
+  }
+  augment /ncs:services{
+    list init_config {
+      description "This is an RFS skeleton service";
+
+      key name;
+      leaf name {
+        tailf:info "Unique service id";
+        tailf:cli-allow-range;
+        type string;
+      }
+
+      container link_service{
+        list link_part{
+
+          uses ncs:service-data;
+          ncs:servicepoint "link_service-servicepoint";
+
+          key part_name;
+          leaf part_name{
+            type string;
+          }
+          container netblock{
+            leaf netaddress{
+              type inet:ipv4-address;
+              default "10.1.0.0";
+            }
+            leaf netmask{
+              type string;
+              default "16";
+            }
+          }
+          list link{
+            key "link_id";
+            leaf link_id{
+              type uint16;
+            }
+            container s_node{
+              uses node;
+            }
+            container d_node{
+              uses node;
+            }
+
+          }
+        }
+      }
+
+      container IGP_service{
+        container OSPF{
+          list process{
+
+            uses ncs:service-data;
+            ncs:servicepoint "IGP_service-servicepoint";
+
+            key "process_id";
+            leaf process_id{type string;}
+            container route_import{
+              leaf route_type{
+                type enumeration{
+                  enum static;
+                  enum ospf;
+                  enum bgp;
+                  enum isis;
+                  enum none;
+                }
+              }
+              leaf red_process_id{type uint32;}
+              leaf metric_type{
+                type enumeration{
+                  enum type-one;
+                  enum type-two;
+                }
+              }
+              leaf metric_value{type uint32;}
+            }
+            container areas{
+              list area{
+                key "area_id";
+                leaf area_id{type uint32;}
+                leaf area_type{
+                  type enumeration{
+                    enum normal;
+                    enum stub;
+                    enum nssa;
+                  }
+                }
+                leaf totally{
+                  type enumeration{
+                    enum TRUE;
+                    enum FALSE;
+                  }
+                }
+                container devices{
+                  list device{
+                    key "device_id";
+                    leaf device_id{type string;}
+                    leaf router_id{type string;}
+                    container interfaces{
+                      list interface{
+                        key "int_type int_id";
+                        leaf int_type{type string;}
+                        leaf int_id{type string;}
+                        leaf network_type{
+                          type enumeration{
+                            enum broadcast;
+                            enum non-broadcast;
+                            enum point-to-point;
+                            enum point-to-multipoint;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
