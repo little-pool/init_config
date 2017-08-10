@@ -14,6 +14,7 @@ def interface_mapping(service, link, ip_peer):
     variables.add("INT_ID", s_interface.int_id)
     variables.add("IPADDRESS", ip_peer[0].strNormal())
     variables.add("NETMASK", "255.255.255.252")
+    template.apply('interface', variables)
 
     #d_node part
     variables.add("DEVICE", d_node.device)
@@ -21,5 +22,4 @@ def interface_mapping(service, link, ip_peer):
     variables.add("INT_ID", d_interface.int_id)
     variables.add("IPADDRESS", ip_peer[1].strNormal())
     variables.add("NETMASK", "255.255.255.252")
-
     template.apply('interface', variables)

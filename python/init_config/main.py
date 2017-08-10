@@ -27,11 +27,6 @@ class link_service_ServiceCallbacks(Service):
             interface_mapping(service, i, ip_peer)
 
 
-            
-        
-        
-        
-        
 
     @Service.pre_modification
     def cb_pre_modification(self, tctx, op, kp, root, proplist):
