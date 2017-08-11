@@ -23,3 +23,5 @@ def interface_mapping(service, link, ip_peer):
     variables.add("IPADDRESS", ip_peer[1].strNormal())
     variables.add("NETMASK", "255.255.255.252")
     template.apply('interface', variables)
+
+
