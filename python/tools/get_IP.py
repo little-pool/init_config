@@ -7,4 +7,4 @@ def get_IP(device_name, int_type, int_id):
         with ncs.maapi.Session(m, 'admin', 'python'):
             with m.start_write_trans() as t:
                 node = ncs.maagic.get_node(t, '/ncs:devices/device{'+device_name+'}')
-    return node.config.ios.interface.GigabitEthernet[int_id].ip.address.primary.address
+    return node.config.interface.GigabitEthernet[int_id].ip.address.primary.address
