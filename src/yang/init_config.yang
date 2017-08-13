@@ -136,12 +136,22 @@ module init_config {
                 container devices{
                   list device{
                     key "device_id";
-                    leaf device_id{type string;}
+                    leaf device_id{
+                        type leafref{
+                            path "/ncs:devices/ncs:device/ncs:name";
+                        }
+                    }
                     leaf router_id{type string;}
                     container interfaces{
                       list interface{
                         key "int_type int_id";
-                        leaf int_type{type string;}
+                        leaf int_type{
+                            type enumeration{
+                                enum Ethernet;
+                                enum FastEthernet;
+                                enum GigabitEthernet;
+                            }
+                        }
                         leaf int_id{type string;}
                         leaf network_type{
                           type enumeration{

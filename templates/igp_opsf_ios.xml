@@ -52,6 +52,11 @@ TAR_AREA        宣告area
                             </nssa>
                         </area>
                         <router-id>{$ROUTER_ID}</router-id>
+                        <network>
+                            <ip>{$INT_IP}</ip>
+                            <mask>{$WILD_CARD}</mask>
+                            <area>{$TAR_AREA}</area>
+                        </network>
                         <!--重分部部分-->
                         <redistribute when="{$RED='TRUE'}">
                             <ospf when="{$RED_PROTOCOL='ospf'}">
@@ -76,11 +81,6 @@ TAR_AREA        宣告area
                                 </isis-area>
                             </isis>
                         </redistribute>
-                        <network>
-                            <ip>{$INT_IP}</ip>
-                            <mask>{$WILD_CARD}</mask>
-                            <area>{$TAR_AREA}</area>
-                        </network>
                     </ospf>
                 </router>
                 <!--接口网络类型部分-->

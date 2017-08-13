@@ -26,8 +26,6 @@ class link_service_ServiceCallbacks(Service):
             ip_peer = linkipgenerator.__next__()
             interface_mapping(service, i, ip_peer)
 
-
-
     @Service.pre_modification
     def cb_pre_modification(self, tctx, op, kp, root, proplist):
         self.log.info('Service premod(service=', kp, ')')
@@ -36,12 +34,16 @@ class link_service_ServiceCallbacks(Service):
     def cb_post_modification(self, tctx, op, kp, root, proplist):
         self.log.info('Service premod(service=', kp, ')')
 
+
+
+
 class IGP_service_ServiceCallbacks(Service):
     
     @Service.create
     def cb_create(self, tctx, root, service, proplist):
         self.log.info('Service create(service=', service._path, ')')
         print('IGP_service is running')
+        igp_mapping(service)
 
     @Service.pre_modification
     def cb_pre_modification(self, tctx, op, kp, root, proplist):
